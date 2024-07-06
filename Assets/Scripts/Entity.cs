@@ -51,7 +51,6 @@ public class Entity : MonoBehaviour
 
     public void SetVelcocity(float xVelocity, float yVelocity)
     {
-        print(xVelocity + " " +  yVelocity);  
         rb.velocity = new(xVelocity, yVelocity);
         FlipController(xVelocity);
     }

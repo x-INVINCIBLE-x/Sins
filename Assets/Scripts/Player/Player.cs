@@ -110,6 +110,8 @@ public class Player : Entity
 
     protected override void OnDrawGizmos()
     {
+        base.OnDrawGizmos();
+
         Gizmos.color = Color.green;
         Gizmos.DrawLine(ledgeCheck.position, new Vector3((ledgeCheck.position.x + (ledgeCheckDistance * facingDir)), ledgeCheck.position.y));
     }

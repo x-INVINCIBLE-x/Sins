@@ -12,6 +12,8 @@ public class PlayerHangingState : PlayerState
     {
         base.Enter();
 
+        player.inputManager.JumpEvent += OnJump;
+
         player.SetZeroVelocity();
         rb.constraints = RigidbodyConstraints2D.FreezePositionY;
     }
@@ -23,16 +25,10 @@ public class PlayerHangingState : PlayerState
         if(xInput != 0 && xInput != player.facingDir)
             stateMachine.ChangeState(player.airState);
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            stateMachine.ChangeState(player.jumpState);
-        }
-
-
         if (!player.isLedgeDetected)
             stateMachine.ChangeState(player.airState);
 
-        if(Input.GetKeyDown(KeyCode.S) || yInput == -1)
+        if(yInput == -1)
         {
             stateMachine.ChangeState(player.airState);
         }
@@ -42,9 +38,16 @@ public class PlayerHangingState : PlayerState
     {
         base.Exit();
 
+        player.inputManager.JumpEvent -= OnJump;
+
         rb.constraints = RigidbodyConstraints2D.None;
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 
         player.SetVelcocity(xInput,-1f);
+    }
+
+    public void OnJump()
+    {
+        stateMachine.ChangeState(player.jumpState);
     }
 }

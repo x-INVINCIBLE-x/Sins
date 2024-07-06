@@ -12,39 +12,45 @@ public class PlayerGroundedState : PlayerState
     public override void Enter()
     {
         base.Enter();
+
+        player.inputManager.JumpEvent += OnJump;
+        player.inputManager.AttackEvent += OnAttack;
+        player.inputManager.BlockEvent += OnBlock;
     }
 
     public override void Update()
     {
         base.Update();
 
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            stateMachine.ChangeState(player.jumpState);
-        }
-
         if(!player.isGroundDetected)
         {
             stateMachine.ChangeState(player.airState);
         }
 
-        if (Input.GetKey(KeyCode.LeftControl) || Input.GetMouseButton(0))
-        {
-            stateMachine.ChangeState(player.primaryAttackState);
-        }
-
-        if (Input.GetKey(KeyCode.RightControl) || Input.GetMouseButton(1))
-        {
-            stateMachine.ChangeState(player.blockState);
-        }
-
-        //moveSpeed = 
-        //player.animator.SetFloat("xVelocity", moveSpeed);
     }
 
     public override void Exit()
     {
         base.Exit();
+
+        player.inputManager.JumpEvent -= OnJump;
+        player.inputManager.AttackEvent -= OnAttack;
+        player.inputManager.BlockEvent -= OnBlock;
+    }
+
+    public void OnJump()
+    {
+        stateMachine.ChangeState(player.jumpState);
+    }
+
+    public void OnAttack()
+    {
+        stateMachine.ChangeState(player.primaryAttackState);
+    }
+
+    public void OnBlock()
+    {
+        stateMachine.ChangeState(player.blockState);
     }
 
 }

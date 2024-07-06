@@ -11,6 +11,9 @@ public class PlayerCrouchState : PlayerCrouchBaseState
     public override void Enter()
     {
         base.Enter();
+
+        player.inputManager.AttackEvent += OnAttack;
+
         player.SetZeroVelocity();
     }
 
@@ -19,10 +22,7 @@ public class PlayerCrouchState : PlayerCrouchBaseState
         base.Update();
 
         if(yInput == 0)
-            stateMachine.ChangeState(player.idleState);
-
-        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.LeftControl))
-            player.animator.SetTrigger("CrouchAttack");
+            stateMachine.ChangeState(player.idleState);            
 
         player.FlipController(xInput);
     }
@@ -30,5 +30,12 @@ public class PlayerCrouchState : PlayerCrouchBaseState
     public override void Exit()
     {
         base.Exit();
+
+        player.inputManager.AttackEvent -= OnAttack;
+    }
+
+    public void OnAttack()
+    {
+        player.animator.SetTrigger("CrouchAttack");
     }
 }

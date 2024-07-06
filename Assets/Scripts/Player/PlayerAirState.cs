@@ -23,7 +23,7 @@ public class PlayerAirState : PlayerState
             stateMachine.ChangeState(player.idleState);
         }
 
-        if(player.isLedgeDetected && !Input.GetKey(KeyCode.DownArrow))
+        if(player.isLedgeDetected && yInput != -1)
         {
             stateMachine.ChangeState(player.hangingState);
         }

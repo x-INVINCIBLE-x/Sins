@@ -11,21 +11,24 @@ public class PlayerBlockState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        player.inputManager.BlockEvent += CancelBlock;
     }
 
     public override void Update()
     {
         base.Update();
-
-        if(Input.GetKeyUp(KeyCode.RightControl) || Input.GetMouseButtonUp(1))
-        {
-            stateMachine.ChangeState(player.idleState);
-        }
     }
 
     public override void Exit()
     {
         base.Exit();
+
+        player.inputManager.BlockEvent -= CancelBlock;
+    }
+
+    public void CancelBlock()
+    {
+        stateMachine.ChangeState(player.idleState);
     }
 
 }
