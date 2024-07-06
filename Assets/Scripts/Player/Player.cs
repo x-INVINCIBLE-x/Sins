@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Player : Entity
 {
+    public InputManager inputManager;
+
     public PlayerIdleState idleState { get; private set; }
     public PlayerMoveState moveState { get; private set; }
     public PlayerJumpState jumpState { get; private set; }
@@ -56,6 +58,8 @@ public class Player : Entity
     protected override void Start()
     {
         base.Start();
+
+        inputManager = InputManager.instance;
 
         stateMachine = new PlayerStateMachine();
 
